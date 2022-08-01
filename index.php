@@ -1,12 +1,11 @@
 <?php
 
 require 'database.php';
+require 'flash_message.php';
 
-session_start(); //início de sessão. permite trocar informações de, e estabelecer sessões entre páginas
+session_start();
 
-$flashMessage = $_SESSION["flash_message"] ?? ""; //mensagem de sucesso 
-unset($_SESSION["flash_message"]);
-
+$flashMessage = getFlashMessage();
 $users = getUsers();
 
 require 'view/index.php';

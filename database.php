@@ -3,25 +3,19 @@
 function getUsers(): array
 {
     $lines = file("./applications-data.csv");
+    $header = array_shift($lines);
+    return array_map(function($line) {
+        $keys = ['id', 'name', 'email', 'cpf', 'phone', 'gender', 'hobbies', 'age', 'bio', 'photo'];
+        $values = explode(";", $line);
+        return array_combine($keys, $values);
+    }, $lines);
+}
 
+function removeUser(string $id): void
+{
+    $lines = file("./applications-data.csv");
     $header = array_shift($lines);
 
-    $users = [];
-
-    foreach ($lines as $line) { //array map
-        $data = explode(";", $line);
-        $users[] = [
-            'id' => $data[0],
-            'name' => $data[1],
-            'email' => $data[2],
-            'cpf' => $data[3],
-            'phone' => $data[4],
-            'gender' => $data[5],
-            'hobbies' => $data[6],
-            'age' => $data[7],
-            'bio' => $data[8],
-            'photo' => $data[9]
-        ];
-    }
-    return $users;
+    $remainingLines = array_filter($lines, fn ($line) => explode(';', $line)[0] !== $id);
+    file_put_contents('./applications-data.csv', [$header, ...$remainingLines]);
 }

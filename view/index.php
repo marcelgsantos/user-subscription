@@ -15,11 +15,11 @@
             <a href="create.php" class="btn btn-primary">Cadastrar Cliente</a>
         </div>
 
-        <?php if ($flashMessage !== "") { ?>
-            <div class="alert alert-success" role="alert">
+        <?php if (! empty($flashMessage)): ?>
+            <div class="alert alert-<?= $flashMessage["type"] ?>" role="alert">
                 <?= $flashMessage["message"]; ?>
             </div>
-        <?php } ?>
+        <?php endif; ?>
 
         <table class="table">
             <thead>
@@ -38,8 +38,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php if (count($users) !== 0) { ?>
-                    <?php foreach ($users as $user) { ?>
+                <?php if (count($users) !== 0): ?>
+                    <?php foreach ($users as $user): ?>
                         <tr>
                             <td><?= $user["id"]; ?></td>
                             <td><?= $user["name"]; ?></td>
@@ -53,12 +53,12 @@
                             <td><img src="upload/<?= $user["photo"]; ?>"></td>
                             <td><a href="./remove.php?id=<?= $user["id"]; ?>">Remover</a></td>
                         </tr>
-                    <?php } ?>
-                <?php } else { ?>
+                    <?php endforeach; ?>
+                <?php else: ?>
                     <tr>
                         <td colspan="11" class="text-center">Nenhum cliente encontrado.</td>
                     </tr>
-                <?php } ?>
+                <?php endif; ?>
             </tbody>
         </table>
     </div>

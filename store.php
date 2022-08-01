@@ -1,5 +1,7 @@
 <?php
 
+require './flash_message.php';
+
 session_start();
 
 // 1. receber a requisição via post
@@ -31,11 +33,7 @@ file_put_contents("./applications-data.csv", $line, FILE_APPEND);
 // unset($_SESSION["data"]);
 // unset($_SESSION["validation"]);
 
-$_SESSION["flash_message"] = [
-    "type" => "success",
-    "message" => "Usuário inserido com sucesso!"
-];
-header("Location: ./index.php");
+setFlashMessage('success', 'Usuário inserido com sucesso!', './index.php');
 
 function cleanData(array $data): array
 {
